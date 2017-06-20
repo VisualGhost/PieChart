@@ -4,6 +4,7 @@ package com.piechart.piechart;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -23,6 +24,7 @@ public class PieChartImpl extends SurfaceView implements PieChart, SurfaceHolder
     public PieChartImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().addCallback(PieChartImpl.this);
+        getHolder().setFormat(PixelFormat.RGBA_8888);
         mViewController = new ViewControllerImpl(context, attrs);
     }
 

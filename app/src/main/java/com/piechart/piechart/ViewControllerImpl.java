@@ -76,7 +76,7 @@ public class ViewControllerImpl implements ViewController {
         mArchPaintSegment1.setStyle(Paint.Style.FILL);
         mArchPaintSegment1.setAntiAlias(true);
         //TODO use attr
-        mArchPaintSegment1.setColor(Color.argb(255, 158, 180, 216));
+        mArchPaintSegment1.setColor(Color.argb(100, 158, 180, 216));
     }
 
     private void initArchPaint2() {
@@ -84,7 +84,7 @@ public class ViewControllerImpl implements ViewController {
         mArchPaintSegment2.setStyle(Paint.Style.FILL);
         mArchPaintSegment2.setAntiAlias(true);
         //TODO use attr
-        mArchPaintSegment2.setColor(Color.argb(255, 158, 198, 216));
+        mArchPaintSegment2.setColor(Color.argb(100, 158, 198, 216));
     }
 
     private void initArchPaint3() {
@@ -92,7 +92,7 @@ public class ViewControllerImpl implements ViewController {
         mArchPaintSegment3.setStyle(Paint.Style.FILL);
         mArchPaintSegment3.setAntiAlias(true);
         //TODO use attr
-        mArchPaintSegment3.setColor(Color.argb(255, 182, 216, 158));
+        mArchPaintSegment3.setColor(Color.argb(100, 182, 216, 158));
     }
 
     private void initArchPaint4() {
