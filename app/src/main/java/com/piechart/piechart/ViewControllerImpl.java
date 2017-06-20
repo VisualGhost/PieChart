@@ -36,26 +36,16 @@ public class ViewControllerImpl implements ViewController {
     private float mCurrentSweepAngle;
     private float radius;
 
-    private int mWidth;
     private boolean isMaxReached;
 
     public ViewControllerImpl(
             Context context,
-            AttributeSet attrs,
-            Bitmap bitmap,
-            float maxSegment1Angle,
-            float maxSegment2Angle,
-            float maxSegmentAngle) {
-        mBitmap = bitmap;
+            AttributeSet attrs) {
         initArchPaint1();
         initArchPaint2();
         initArchPaint3();
         initArchPaint4();
         initCenterCirclePaint();
-        mMaxSegment1Angle = maxSegment1Angle;
-        mMaxSegment2Angle = maxSegment2Angle;
-        mMaxSegmentAngle = maxSegmentAngle;
-
         init(context, attrs);
     }
 
@@ -66,6 +56,8 @@ public class ViewControllerImpl implements ViewController {
             try {
                 array = context.obtainStyledAttributes(attrs, R.styleable.PieChart);
                 mRadius = array.getFloat(R.styleable.PieChart_radius, 0f);
+                radius = MIN_CIRCLE_FACTOR * mRadius;
+                rectF = new RectF(0, 0, mRadius, mRadius);
             } finally {
                 if (array != null) {
                     array.recycle();
@@ -118,9 +110,7 @@ public class ViewControllerImpl implements ViewController {
 
     @Override
     public void onSize(int w, int h) {
-        rectF = new RectF(0, 0, w, h);
-        mWidth = w;
-        radius = MIN_CIRCLE_FACTOR * mWidth;
+
     }
 
     @Override
@@ -171,7 +161,7 @@ public class ViewControllerImpl implements ViewController {
     }
 
     private void modifyCircleRadius(float progress) {
-        radius = mWidth * (MIN_CIRCLE_FACTOR + MAX_CIRCLE_FACTOR * (1 - (progress / 100f)));
+        radius = mRadius * (MIN_CIRCLE_FACTOR + MAX_CIRCLE_FACTOR * (1 - (progress / 100f)));
     }
 
     private void modifyCircleColor(float progress) {
@@ -190,13 +180,33 @@ public class ViewControllerImpl implements ViewController {
             modifyCircleColor(progress);
             modifyCircleRadius(progress);
         }
-        canvas.drawCircle(mWidth / 2, mWidth / 2, radius, mCenterCirclePaint);
+        canvas.drawCircle(mRadius / 2, mRadius / 2, radius, mCenterCirclePaint);
     }
 
     @Override
     public void reset() {
         isMaxReached = false;
-        radius = MIN_CIRCLE_FACTOR * mWidth;
+        radius = MIN_CIRCLE_FACTOR * mRadius;
         mCenterCirclePaint.setColor(Color.WHITE);// TODO use attr
+    }
+
+    @Override
+    public void setBackground(Bitmap background) {
+        mBitmap = background;
+    }
+
+    @Override
+    public void setMaxSegment1Angle(float angle) {
+        mMaxSegment1Angle = angle;
+    }
+
+    @Override
+    public void setMaxSegment2Angle(float angle) {
+        mMaxSegment2Angle = angle;
+    }
+
+    @Override
+    public void setMaxSegment3Angle(float angle) {
+        mMaxSegmentAngle = angle;
     }
 }

@@ -4,8 +4,6 @@ package com.piechart.piechart;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -25,11 +23,28 @@ public class PieChartImpl extends SurfaceView implements PieChart, SurfaceHolder
     public PieChartImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().addCallback(PieChartImpl.this);
+        mViewController = new ViewControllerImpl(context, attrs);
     }
 
     @Override
     public void setBackground(Bitmap bitmap) {
         mBitmap = bitmap;
+        mViewController.setBackground(bitmap);
+    }
+
+    @Override
+    public void setMaxSegment1Angle(float angle) {
+        mViewController.setMaxSegment1Angle(angle);
+    }
+
+    @Override
+    public void setMaxSegment2Angle(float angle) {
+        mViewController.setMaxSegment2Angle(angle);
+    }
+
+    @Override
+    public void setMaxSegment3Angle(float angle) {
+        mViewController.setMaxSegment3Angle(angle);
     }
 
     @Override
@@ -74,11 +89,6 @@ public class PieChartImpl extends SurfaceView implements PieChart, SurfaceHolder
         if (mViewController != null) {
             mViewController.onSize(w, h);
         }
-    }
-
-    @Override
-    public void setViewController(ViewController viewController) {
-        mViewController = viewController;
     }
 
     @Override

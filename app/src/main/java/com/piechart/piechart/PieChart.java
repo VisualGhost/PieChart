@@ -4,8 +4,6 @@ import android.graphics.Bitmap;
 
 public interface PieChart {
 
-    void setViewController(ViewController viewController);
-
     void setObservableHolder(ObservableHolder observableHolder);
 
     void startAnimation();
@@ -13,5 +11,11 @@ public interface PieChart {
     void slide(float sweepAngle, int progress);
 
     void setBackground(Bitmap bitmap);
+
+    void setMaxSegment1Angle(float angle);
+
+    void setMaxSegment2Angle(float angle);
+
+    void setMaxSegment3Angle(float angle);
 
 }

@@ -31,9 +31,11 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         Bitmap background = BitmapFactory.decodeResource(getResources(),
                 R.drawable.piechart_background);
         mPieChart.setBackground(background);
+        mPieChart.setMaxSegment1Angle(SEGMENT_1);
+        mPieChart.setMaxSegment2Angle(SEGMENT_2);
+        mPieChart.setMaxSegment3Angle(SEGMENT_MAX);
         ObservableHolder.Range clockWiseRange = new ObservableHolder.Range(0, SEGMENT_MAX, 2000);
         ObservableHolder.Range counterClockWiseRange = new ObservableHolder.Range(SEGMENT_MAX, SEGMENT_2, 1500);
-        mPieChart.setViewController(new ViewControllerImpl(background, SEGMENT_1, SEGMENT_2, SEGMENT_MAX));
         mPieChart.setObservableHolder(new ObservableHolder(clockWiseRange, counterClockWiseRange));
         mSeekBar = (SeekBar) findViewById(R.id.seek_bar);
         mSeekBar.setOnSeekBarChangeListener(this);
