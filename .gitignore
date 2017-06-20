@@ -1,0 +1,11 @@
+*.iml
+ines (9 sloc)  118 Bytes
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
