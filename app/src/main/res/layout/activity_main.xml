@@ -7,13 +7,14 @@
 
     <com.piechart.piechart.PieChartImpl
         android:id="@+id/pie_chart"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="@dimen/pie_chart_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:radius="@dimen/pie_chart_radius"
+        app:marginBottom="14.3dp"
         />
 
     <SeekBar

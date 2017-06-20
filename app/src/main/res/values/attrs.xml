@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="PieChart">
         <attr name="radius" format="dimension"/>
+        <attr name="marginBottom" format="dimension"/>
     </declare-styleable>
 </resources>

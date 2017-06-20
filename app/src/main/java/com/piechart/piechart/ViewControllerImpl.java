@@ -20,6 +20,9 @@ public class ViewControllerImpl implements ViewController {
 
     private float mRadius;
     private Bitmap mBitmap;
+    private int height;
+    private int width;
+    private float marginBottom;
 
     private Paint mArchPaintSegment1;
     private Paint mArchPaintSegment2;
@@ -28,6 +31,7 @@ public class ViewControllerImpl implements ViewController {
     private Paint mCenterCirclePaint;
 
     private RectF rectF;
+    private RectF mBitmapRectF;
 
     private float mMaxSegmentAngle;
     private float mMaxSegment1Angle;
@@ -55,9 +59,9 @@ public class ViewControllerImpl implements ViewController {
             TypedArray array = null;
             try {
                 array = context.obtainStyledAttributes(attrs, R.styleable.PieChart);
-                mRadius = array.getFloat(R.styleable.PieChart_radius, 0f);
+                mRadius = array.getDimension(R.styleable.PieChart_radius, 0f);
                 radius = MIN_CIRCLE_FACTOR * mRadius;
-                rectF = new RectF(0, 0, mRadius, mRadius);
+                marginBottom = array.getDimension(R.styleable.PieChart_marginBottom, 0);
             } finally {
                 if (array != null) {
                     array.recycle();
@@ -66,7 +70,6 @@ public class ViewControllerImpl implements ViewController {
         }
 
     }
-
 
     private void initArchPaint1() {
         mArchPaintSegment1 = new Paint();
@@ -110,7 +113,15 @@ public class ViewControllerImpl implements ViewController {
 
     @Override
     public void onSize(int w, int h) {
+        mBitmapRectF = new RectF(0, 0, w, h);
+        width = w;
+        height = h;
+        float left = w / 2 - mRadius / 2;
+        float top = h / 2 - mRadius / 2;
+        float right = mRadius + w / 2 - mRadius / 2;
+        float bottom = mRadius + h / 2 - mRadius / 2;
 
+        rectF = new RectF(left, top - marginBottom, right, bottom - marginBottom);
     }
 
     @Override
@@ -122,7 +133,7 @@ public class ViewControllerImpl implements ViewController {
     }
 
     private void drawSegments(Canvas canvas, float sweepAngle) {
-        canvas.drawBitmap(mBitmap, null, rectF, null);
+        canvas.drawBitmap(mBitmap, null, mBitmapRectF, null);
         drawSegment4(canvas);
         drawSegment1(canvas, sweepAngle);
         if (mSweepAngle > 0) {
@@ -180,7 +191,7 @@ public class ViewControllerImpl implements ViewController {
             modifyCircleColor(progress);
             modifyCircleRadius(progress);
         }
-        canvas.drawCircle(mRadius / 2, mRadius / 2, radius, mCenterCirclePaint);
+        canvas.drawCircle(width / 2, height / 2 - marginBottom, radius, mCenterCirclePaint);
     }
 
     @Override
