@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
+import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -21,12 +22,14 @@ public class PieChartImpl extends SurfaceView implements PieChart, SurfaceHolder
     private Bitmap mBitmap;
     private RectF mRectF;
 
-    public PieChartImpl(Context context, Bitmap bitmap) {
-        super(context, null);
-        mBitmap = bitmap;
+    public PieChartImpl(Context context, AttributeSet attrs) {
+        super(context, attrs);
         getHolder().addCallback(PieChartImpl.this);
-        setZOrderOnTop(true);    // necessary
-        getHolder().setFormat(PixelFormat.TRANSPARENT);
+    }
+
+    @Override
+    public void setBackground(Bitmap bitmap) {
+        mBitmap = bitmap;
     }
 
     @Override
@@ -67,10 +70,9 @@ public class PieChartImpl extends SurfaceView implements PieChart, SurfaceHolder
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        int smallest = Math.min(w, h);
         mRectF = new RectF(0, 0, w, h);
         if (mViewController != null) {
-            mViewController.onSize(smallest, smallest);
+            mViewController.onSize(w, h);
         }
     }
 
@@ -125,7 +127,6 @@ public class PieChartImpl extends SurfaceView implements PieChart, SurfaceHolder
                     canvas = getHolder().lockCanvas(null);
                     synchronized (getHolder()) {
                         if (canvas != null) {
-                            canvas.drawColor(Color.WHITE);
                             if (mViewController != null) {
                                 mViewController.draw(canvas, aFloat);
                             }

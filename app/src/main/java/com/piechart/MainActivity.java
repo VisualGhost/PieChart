@@ -12,7 +12,6 @@ import android.widget.SeekBar;
 
 import com.piechart.piechart.ObservableHolder;
 import com.piechart.piechart.PieChart;
-import com.piechart.piechart.PieChartImpl;
 import com.piechart.piechart.ViewControllerImpl;
 
 public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
@@ -26,15 +25,14 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Bitmap background = BitmapFactory.decodeResource(getResources(),
-                R.drawable.piechart_background);
-        mPieChart = new PieChartImpl(this, background);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mPieChart = (PieChart) findViewById(R.id.pie_chart);
+        Bitmap background = BitmapFactory.decodeResource(getResources(),
+                R.drawable.piechart_background);
+        mPieChart.setBackground(background);
         ObservableHolder.Range clockWiseRange = new ObservableHolder.Range(0, SEGMENT_MAX, 2000);
         ObservableHolder.Range counterClockWiseRange = new ObservableHolder.Range(SEGMENT_MAX, SEGMENT_2, 1500);
-        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.chart_container);
-        frameLayout.addView((View) mPieChart);
         mPieChart.setViewController(new ViewControllerImpl(background, SEGMENT_1, SEGMENT_2, SEGMENT_MAX));
         mPieChart.setObservableHolder(new ObservableHolder(clockWiseRange, counterClockWiseRange));
         mSeekBar = (SeekBar) findViewById(R.id.seek_bar);

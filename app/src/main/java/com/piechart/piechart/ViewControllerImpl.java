@@ -1,11 +1,16 @@
 package com.piechart.piechart;
 
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.AttributeSet;
+
+import com.piechart.R;
 
 public class ViewControllerImpl implements ViewController {
 
@@ -13,6 +18,7 @@ public class ViewControllerImpl implements ViewController {
     private static final float MIN_CIRCLE_FACTOR = 0.1f;
     private static final float MAX_CIRCLE_FACTOR = 0.3f;
 
+    private float mRadius;
     private Bitmap mBitmap;
 
     private Paint mArchPaintSegment1;
@@ -33,10 +39,13 @@ public class ViewControllerImpl implements ViewController {
     private int mWidth;
     private boolean isMaxReached;
 
-    public ViewControllerImpl(Bitmap bitmap,
-                              float maxSegment1Angle,
-                              float maxSegment2Angle,
-                              float maxSegmentAngle) {
+    public ViewControllerImpl(
+            Context context,
+            AttributeSet attrs,
+            Bitmap bitmap,
+            float maxSegment1Angle,
+            float maxSegment2Angle,
+            float maxSegmentAngle) {
         mBitmap = bitmap;
         initArchPaint1();
         initArchPaint2();
@@ -46,7 +55,26 @@ public class ViewControllerImpl implements ViewController {
         mMaxSegment1Angle = maxSegment1Angle;
         mMaxSegment2Angle = maxSegment2Angle;
         mMaxSegmentAngle = maxSegmentAngle;
+
+        init(context, attrs);
     }
+
+    private void init(Context context, AttributeSet attrs) {
+
+        if (attrs != null) {
+            TypedArray array = null;
+            try {
+                array = context.obtainStyledAttributes(attrs, R.styleable.PieChart);
+                mRadius = array.getFloat(R.styleable.PieChart_radius, 0f);
+            } finally {
+                if (array != null) {
+                    array.recycle();
+                }
+            }
+        }
+
+    }
+
 
     private void initArchPaint1() {
         mArchPaintSegment1 = new Paint();
